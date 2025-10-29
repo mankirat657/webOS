@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebOS - Disk Partition Manager</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="os-container">
+      <div class="window">
+        <div class="window-header">
+          <div class="window-controls">
+            <div class="control close"></div>
+            <div class="control minimize"></div>
+            <div class="control maximize"></div>
+          </div>
+          <h1>WebOS Disk Manager</h1>
+        </div>
+
+        <div class="window-content">
+          <div class="partition-heading">
+            <h1>Welcome to WebOS</h1>
+            <p>Manage your disk partitions with ease</p>
+          </div>
+
+          <div class="partition-form">
+            <div class="form-section">
+              <h2>
+                Configure Disk Partitions
+                <sup>lab</sup>
+                <p>Maximum 5 partitions supported</p>
+              </h2>
+
+              <form id="main-partition">
+                <div class="input-group">
+                  <label for="noOfPartitions">Number of Partitions:</label>
+                  <input
+                    class="input-field"
+                    type="number"
+                    id="noOfPartitions"
+                    min="1"
+                    max="5"
+                    placeholder="Enter number of partitions (1-5)"
+                    required
+                  />
+                </div>
+                <button type="submit" id="SubmitBtn" class="primary-btn">
+                  Create Partitions
+                </button>
+              </form>
+            </div>
+
+            <div class="displayDetails"></div>
+
+            <div class="action-buttons">
+              <div class="continueBtn"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
