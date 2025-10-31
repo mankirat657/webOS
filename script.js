@@ -1,4 +1,4 @@
-const LOCAL_STORAGE_QUOTA = 5 * 1024 * 1024; // 5 MB approx quota
+const LOCAL_STORAGE_QUOTA = 5 * 1024 * 1024;
 
 const formSection = document.querySelector(".form-section");
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,13 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Calculate approximate localStorage used space in bytes
 function getUsedLocalStorageSize() {
   let total = 0;
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     const value = localStorage.getItem(key);
-    total += key.length * 2 + value.length * 2; // UTF-16: 2 bytes per char
+    total += key.length * 2 + value.length * 2;
   }
   return total;
 }
@@ -56,7 +55,7 @@ function renderPartitionCard() {
   let diskinfo = JSON.parse(localStorage.getItem("disk-partitions"));
   if (diskinfo) {
     let displayWrapper = document.querySelector(".displayDetails");
-    displayWrapper.innerHTML = ""; // Clear before re-rendering
+    displayWrapper.innerHTML = "";
     diskinfo.forEach((item, index) => {
       const Drives = document.createElement("div");
       Drives.classList.add("Drives");
@@ -150,7 +149,6 @@ function renderPartitionCard() {
           return;
         }
 
-        // Update partition size in KB
         partitions[index].size = Number(inputValue);
         localStorage.setItem("disk-partitions", JSON.stringify(partitions));
         alert(`${partitions[index].name} size updated to ${inputValue} KB`);

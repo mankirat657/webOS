@@ -26,12 +26,11 @@ html {
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Glass morphism effect for modern look */
 .menu {
   position: absolute;
   min-width: 240px;
   max-width: 320px;
-  background: rgba(20, 20, 20, 0.95);
+  background: rgba(0, 0, 0, 0.443);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
@@ -113,7 +112,7 @@ html {
 }
 
 .childoption {
-  background: rgba(25, 25, 25, 0.95);
+  background: rgba(0, 0, 0, 0.468);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 10px;
@@ -135,7 +134,6 @@ html {
   }
 }
 
-/* Desktop icons styling */
 .folder {
   width: 80px;
   height: 80px;
@@ -183,7 +181,7 @@ html {
   position: absolute;
   bottom: -8px;
   width: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.459);
   backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
   border-radius: 4px;
@@ -250,7 +248,7 @@ html {
   width: 100%;
   height: 85vh;
   margin: 0 auto;
-  background: rgba(20, 20, 20, 0.95);
+  background: rgba(0, 0, 0, 0.306);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
@@ -276,7 +274,7 @@ html {
   display: flex;
   align-items: center;
   padding: 16px 20px;
-  background: rgba(40, 40, 40, 0.6);
+  background: rgba(0, 0, 0, 0.459);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--glass-border);
 }
@@ -285,7 +283,7 @@ html {
   flex: 1;
   display: flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.452);
   border: 1px solid var(--glass-border);
   border-radius: 8px;
   padding: 8px 16px;
@@ -320,7 +318,7 @@ html {
 .search-bar {
   display: flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.493);
   border: 1px solid var(--glass-border);
   border-radius: 8px;
   padding: 8px 16px;
@@ -354,7 +352,7 @@ html {
 
 .sidebar {
   width: 240px;
-  background: rgba(25, 25, 25, 0.8);
+  background: rgba(0, 0, 0, 0.619);
   backdrop-filter: blur(10px);
   border-right: 1px solid var(--glass-border);
   padding: 20px 0;
@@ -689,14 +687,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
-/* Taskbar Styles */
 .taskbar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 48px;
-  background: rgba(30, 30, 30, 0.95);
+  background: rgba(0, 0, 0, 0.53);
   backdrop-filter: blur(20px);
   border-top: 1px solid var(--glass-border);
   display: flex;
@@ -707,7 +704,6 @@ body {
   box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Taskbar Left Section */
 .taskbar-left {
   display: flex;
   align-items: center;
@@ -715,7 +711,6 @@ body {
   flex: 1;
 }
 
-/* Start Button */
 .start-button {
   width: 40px;
   height: 40px;
@@ -744,7 +739,6 @@ body {
   font-weight: bold;
 }
 
-/* Taskbar Apps */
 .taskbar-apps {
   display: flex;
   align-items: center;
@@ -805,14 +799,12 @@ body {
   text-overflow: ellipsis;
 }
 
-/* Taskbar Right Section */
 .taskbar-right {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* System Tray */
 .system-tray {
   display: flex;
   align-items: center;
@@ -843,7 +835,6 @@ body {
   font-size: 1rem;
 }
 
-/* Time and Date */
 .time-date {
   display: flex;
   flex-direction: column;
@@ -872,7 +863,6 @@ body {
   line-height: 1.2;
 }
 
-/* Show Desktop */
 .show-desktop {
   width: 4px;
   height: 100%;
@@ -898,7 +888,6 @@ body {
   width: 3px;
 }
 
-/* Taskbar Animations */
 @keyframes taskbarAppIn {
   from {
     opacity: 0;
@@ -914,7 +903,6 @@ body {
   animation: taskbarAppIn 0.3s ease-out;
 }
 
-/* Active App Indicator */
 .taskbar-app.active::after {
   content: "";
   position: absolute;
@@ -928,7 +916,6 @@ body {
   box-shadow: 0 0 8px var(--accent-color);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .taskbar {
     height: 56px;
@@ -1001,7 +988,7 @@ body {
   left: 300px;
   width: 800px;
   height: 600px;
-  background: rgba(25, 25, 25, 0.95);
+  background: rgba(0, 0, 0, 0.187);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
@@ -1032,7 +1019,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  background: rgba(40, 40, 40, 0.8);
+  background: rgba(0, 0, 0, 0.473);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--glass-border);
   user-select: none;
@@ -1102,7 +1089,6 @@ body {
   font-weight: bold;
 }
 
-/* Window Content */
 .window-content {
   flex: 1;
   display: flex;
@@ -1116,10 +1102,35 @@ body {
   padding: 20px;
   overflow: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
-
+#folderidca i {
+  color: yellow;
+}
+.createicon {
+  font-size: 1rem;
+}
+.subfolder {
+  background-color: var(--primaryBorder);
+  backdrop-filter: blur(70px);
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+  margin-top: 1vw;
+  border-radius: 23px;
+}
+.subfolder i {
+  color: yellow !important;
+}
+.subfolder:hover {
+  scale: 1.03;
+  transition: all 0.1s ease-in-out;
+}
+.insideFolder {
+  background-color: transparent;
+  color: white;
+  justify-self: center;
+  text-align: center;
+  border: none;
+}
 .empty-folder {
   text-align: center;
   color: var(--text-color);
@@ -1128,8 +1139,6 @@ body {
 
 .empty-folder i {
   font-size: 4rem;
-  color: #666;
-  margin-bottom: 16px;
   display: block;
 }
 
@@ -1139,12 +1148,11 @@ body {
   margin: 0;
 }
 
-/* Window Status Bar */
 .window-status-bar {
   display: flex;
   align-items: center;
   padding: 8px 16px;
-  background: rgba(35, 35, 35, 0.8);
+  background: rgba(0, 0, 0, 0.543);
   backdrop-filter: blur(10px);
   border-top: 1px solid var(--glass-border);
   font-size: 0.85rem;
@@ -1162,7 +1170,6 @@ body {
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* Folder Content Styles (when not empty) */
 .folder-content {
   width: 100%;
   height: 100%;
@@ -1214,13 +1221,11 @@ body {
   max-width: 100%;
   line-height: 1.2;
 }
-
-/* Toolbar */
 .window-toolbar {
   display: flex;
   align-items: center;
   padding: 8px 16px;
-  background: rgba(35, 35, 35, 0.6);
+  background: rgba(0, 0, 0, 0.441);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--glass-border);
   gap: 8px;
@@ -1376,4 +1381,109 @@ body {
 .content-area.drop-zone {
   background: rgba(0, 120, 212, 0.1);
   border: 2px dashed var(--accent-color);
+}
+.settings-panel {
+  position: absolute;
+  top: 40px;
+  left: 450px;
+  width: 320px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px;
+  display: none;
+  box-shadow: var(--shadow);
+  color: var(--text-color);
+  animation: fadeSlide 0.25s ease forwards;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.settings-header i {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.settings-section {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toggle-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggle-option input {
+  display: none;
+}
+
+.slider {
+  width: 42px;
+  height: 22px;
+  background: #444;
+  border-radius: 20px;
+  position: relative;
+  transition: 0.3s;
+}
+
+.slider::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: 0.3s;
+}
+
+#darkModeToggle:checked + .slider {
+  background: var(--accent-color);
+}
+
+#darkModeToggle:checked + .slider::before {
+  transform: translateX(20px);
+}
+
+.wallpaper-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.wallpaper-thumb {
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 1px solid transparent;
+}
+
+.wallpaper-thumb:hover {
+  border-color: var(--accent-color);
+  transform: scale(1.04);
 }

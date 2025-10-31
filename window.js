@@ -1,8 +1,9 @@
 let body = document.querySelector("body");
 let draggedFolder = null;
 let originalPosition = { x: 0, y: 0 };
-function makeDraggable(windowElement) {
-  const header = windowElement.querySelector(".window-header");
+
+function makeDraggable(windowElement, handleSelector = ".window-header") {
+  const header = windowElement.querySelector(handleSelector) || windowElement;
   let isDragging = false;
   let startX, startY, initialX, initialY;
 
@@ -160,7 +161,7 @@ function renderMenu() {
 </div>
       <hr class="menu-sep">
       <div class="menu-item"><i class="ri-computer-line"></i>Display settings</div>
-      <div class="menu-item"><i class="ri-brush-line"></i>Personalize</div>
+      <div class="menu-item wallpaperset"><i class="ri-brush-line"></i>Personalize</div>
       <hr class="menu-sep">
       <div class="menu-item"><i class="ri-terminal-line"></i>Open in Terminal</div>
     `;
@@ -226,6 +227,7 @@ function renderMenu() {
             id: newFolderId,
             folderName: folderValue,
             position: { x, y },
+            childrenFolders: [],
           });
           localStorage.setItem("folders", JSON.stringify(folders));
           displayFolders();
@@ -253,6 +255,71 @@ function renderMenu() {
       },
       { once: true }
     );
+
+    const wallpaperMenu = document.querySelector(".wallpaperset");
+    console.log(wallpaperMenu);
+
+    wallpaperMenu.addEventListener("click", (e) => {
+      const wallpaperElement = document.createElement("div");
+      wallpaperElement.innerHTML = ` <div class="settings-panel" id="settingsPanel">
+      <div class="settings-header">
+        <span>Settings</span>
+        <i class="ri-close-line" id="closeSettings"></i>
+      </div>
+      <div class="settings-section">
+        <span>Change Wallpaper</span>
+        <div class="wallpaper-grid">
+          <img
+            src="https://picsum.photos/800/450?random=1"
+            class="wallpaper-thumb"
+          />
+          <img
+            src="https://picsum.photos/800/450?random=2"
+            class="wallpaper-thumb"
+          />
+          <img
+            src="https://picsum.photos/800/450?random=3"
+            class="wallpaper-thumb"
+          />
+          <img
+            src="https://picsum.photos/800/450?random=4"
+            class="wallpaper-thumb"
+          />
+        </div>
+      </div>
+      <div>
+        <h3>Upload your wallpaper</h3>
+        <input type="file" placeholder="upload your wallpaper" />
+      </div>
+    </div>`;
+      body.append(wallpaperElement);
+      const settingPanel = document.querySelector(".settings-panel");
+      settingPanel.style.display = "block";
+      makeDraggable(settingPanel);
+      const settingClose = document.querySelector("#closeSettings");
+      settingClose.addEventListener("click", () => {
+        settingPanel.style.display = "none";
+      });
+      const fileInput = settingPanel.querySelector('input[type="file"]');
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        console.log(file);
+
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (evt) {
+          console.log(evt.target.result);
+
+          document.body.style.backgroundImage = `url('${evt.target.result}')`;
+          document.body.style.backgroundSize = "cover";
+          document.body.style.width = "100%";
+          document.body.style.height = "100%";
+          localStorage.setItem("userWallpaper", evt.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
   });
 }
 
@@ -263,7 +330,7 @@ function generateUniqueId() {
 }
 
 function displayFolders() {
-  const getFolders = JSON.parse(localStorage.getItem("folders"));
+  const getFolders = JSON.parse(localStorage.getItem("folders")) || [];
   console.log(getFolders);
 
   let folderWrapper = document.querySelector(".folderWrapper");
@@ -323,7 +390,8 @@ function displayFolders() {
       console.log(renamebtn);
       console.log(item.id);
       renamebtn.addEventListener("click", (e) => {
-        const getFolderDetails = JSON.parse(localStorage.getItem("folders"));
+        const getFolderDetails =
+          JSON.parse(localStorage.getItem("folders")) || [];
         console.log(getFolderDetails);
         const FolderIndex = getFolderDetails.findIndex(
           (f) => f.id == renamebtn.id
@@ -342,7 +410,8 @@ function displayFolders() {
       });
       const deletebtn = document.querySelector(".delete");
       deletebtn.addEventListener("click", (e) => {
-        const getFolderDetails = JSON.parse(localStorage.getItem("folders"));
+        const getFolderDetails =
+          JSON.parse(localStorage.getItem("folders")) || [];
         console.log(getFolderDetails);
         const filteredFolders = getFolderDetails.filter(
           (f) => f.id != deletebtn.id
@@ -363,6 +432,36 @@ function displayFolders() {
       const folderName = item.children[1].value;
 
       const folderStructureWrapper = document.createElement("div");
+      const getchildrenFolders =
+        JSON.parse(localStorage.getItem("folders")) || [];
+      const filteredChildrenFolder =
+        Array.isArray(getchildrenFolders) &&
+        getchildrenFolders.filter((f) => f.id == item.id);
+      const subFolders = filteredChildrenFolder[0]?.childrenFolders || [];
+
+      function displaySubFolders() {
+        return (
+          Array.isArray(subFolders) &&
+          subFolders
+            .map((item, index) => {
+              return `
+        <div class="subfolder subnest" id="${item.id}">
+          <i class="ri-folder-3-fill" style="color: yellow !important"></i>
+          <input
+            type="text"
+            value="${item.title}"
+            readonly
+            class="insideFolder"
+            style="outline: none"
+            placeholder="folder1"
+          />
+        </div>
+      `;
+            })
+            .join("")
+        );
+      }
+
       folderStructureWrapper.innerHTML = ` 
           <div class="folder-structure-window" id=${item.id}>
       <div class="window-header">
@@ -385,13 +484,17 @@ function displayFolders() {
       <div class="window-content">
         <div class="content-area">
           <div class="empty-folder">
-            <i class="ri-folder-open-line"></i>
-            <p>This folder is empty</p>
+          <div class="putfolder">
+        ${displaySubFolders()}
+          </div>
+          
           </div>
         </div>
       </div>
       <div class="window-status-bar">
-        <div class="status-item">1 item</div>
+        <div class="status-item">${subFolders.length} item${
+        subFolders.length !== 1 ? "s" : ""
+      }</div>
         <div class="status-item">0 bytes</div>
       </div>
     </div>
@@ -410,34 +513,92 @@ function displayFolders() {
       maximize.addEventListener("click", () => {
         windowElement.classList.toggle("maximized");
       });
-      const getOpenedFolders = document.querySelectorAll(
-        ".folder-structure-window"
-      );
-      getOpenedFolders.forEach((item, index) => {
-        item.addEventListener("contextmenu", (e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          let folderCreateHTML = `
-      <div class="menu-item renamebtn" id=${item.id}><i class="ri-sort-desc"></i>Rename <i class="ri-arrow-right-s-line arrow"></i></div>
+
+      // Create subfolders functionality
+      createSubFolders(windowElement, item.id);
+    });
+  });
+}
+
+function createSubFolders(windowElement, folderId) {
+  windowElement.addEventListener("contextmenu", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    let folderCreateHTML = `
+      <div class="menu-item createFolderBtn" id=${folderId}><i class="ri-file-add-fill"></i>Create a Folder <i class="ri-arrow-right-s-line arrow"></i></div>
       <hr class="menu-sep">
-      <div class="menu-item delete" id=${item.id}><i class="ri-refresh-line"></i>Delete</div>
       <div class="menu-item"><i class="ri-terminal-line"></i>Open in Terminal</div>
     `;
-          document.querySelectorAll(".menu").forEach((m) => m.remove());
-          let folderCreateMenu = document.createElement("div");
-          folderCreateMenu.classList.add("menu");
-          folderCreateMenu.innerHTML = folderCreateHTML;
-          if (e.clientY > 300) {
-            folderCreateMenu.style.transform = "translate(0%,-100%)";
-            FolderfolderCreateMenumenu.style.top = e.clientY + "px";
-            folderCreateMenu.style.left = e.clientX + "px";
-          } else {
-            folderCreateMenu.style.top = e.clientY + "px";
-            folderCreateMenu.style.left = e.clientX + "px";
-          }
 
-          body.append(folderCreateMenu);
-        });
+    document.querySelectorAll(".menu").forEach((m) => m.remove());
+    let folderCreateMenu = document.createElement("div");
+    folderCreateMenu.classList.add("menu");
+    folderCreateMenu.innerHTML = folderCreateHTML;
+
+    if (e.clientY > 300) {
+      folderCreateMenu.style.transform = "translate(0%,-100%)";
+      folderCreateMenu.style.top = e.clientY + "px";
+      folderCreateMenu.style.left = e.clientX + "px";
+    } else {
+      folderCreateMenu.style.top = e.clientY + "px";
+      folderCreateMenu.style.left = e.clientX + "px";
+    }
+
+    body.append(folderCreateMenu);
+
+    const createSubFolderBtn =
+      folderCreateMenu.querySelector(".createFolderBtn");
+    createSubFolderBtn.addEventListener("click", () => {
+      const getFolders = JSON.parse(localStorage.getItem("folders")) || [];
+      const folderElement = document.createElement("div");
+      folderElement.classList.add("foldercreate");
+      folderElement.innerHTML = `
+        <i class="ri-folder-3-fill"></i>
+        <input type="text" class='insideFolder' style="outline: none" placeholder="folder1" class="childFolderInput" />
+      `;
+
+      const currentOpenFolder = windowElement.querySelector(".putfolder");
+      currentOpenFolder.append(folderElement);
+
+      const insideInput = folderElement.querySelector(".insideFolder");
+      insideInput.focus();
+
+      insideInput.addEventListener("keydown", (e) => {
+        e.stopPropagation();
+        if (e.key === "Enter") {
+          const findIndex = getFolders.findIndex((f) => f.id == folderId);
+          if (findIndex !== -1) {
+            let children = getFolders[findIndex].childrenFolders || [];
+            const newSubFolder = {
+              title: insideInput.value || "New Folder",
+              id: generateUniqueId(),
+            };
+            children.push(newSubFolder);
+            getFolders[findIndex].childrenFolders = children;
+            localStorage.setItem("folders", JSON.stringify(getFolders));
+
+            folderElement.outerHTML = `
+              <div class="subfolder subnest" id="${newSubFolder.id}">
+                <i class="ri-folder-3-fill" style="color: yellow !important"></i>
+                <input
+                  type="text"
+                  value="${newSubFolder.title}"
+                  readonly
+                  class="insideFolder"
+                  style="outline: none"
+                  placeholder="folder1"
+                />
+              </div>
+            `;
+
+            const statusItem = windowElement.querySelector(".status-item");
+            const itemCount = children.length;
+            statusItem.textContent = `${itemCount} item${
+              itemCount !== 1 ? "s" : ""
+            }`;
+          }
+        }
       });
     });
   });
@@ -448,8 +609,8 @@ let openFolder = false;
 
 function displayPartitions() {
   const getDisplayWindow = document.querySelector(".thisPC");
-  const getPartitionsData = JSON.parse(localStorage.getItem("disk-partitions"));
-  console.log(getPartitionsData);
+  const getPartitionsData =
+    JSON.parse(localStorage.getItem("disk-partitions")) || [];
 
   getDisplayWindow.addEventListener("click", (e) => {
     let thispcdiv = document.createElement("div");
@@ -600,6 +761,7 @@ function displayPartitions() {
     `;
 
     body.append(thispcdiv);
+    const folderWindow = document.querySelector(".folderwindow");
     const close = document.querySelector("#close");
     close.addEventListener("click", () => {
       thispcdiv.remove();
@@ -608,9 +770,33 @@ function displayPartitions() {
 }
 
 displayPartitions();
+
 function bringToFront(windowElement) {
   document.querySelectorAll(".folder-structure-window").forEach((win) => {
     win.style.zIndex = "1000";
   });
   windowElement.style.zIndex = "1001";
 }
+
+const savedWallpaper = localStorage.getItem("userWallpaper");
+if (savedWallpaper) {
+  document.body.style.backgroundImage = `url('${savedWallpaper}')`;
+  document.body.style.backgroundSize = `cover`;
+  document.body.style.width = "100%";
+  document.body.style.height = "100%";
+}
+
+const taskbarTimee = document.querySelector(".taskbar-time");
+
+setInterval(() => {
+  const date = new Date();
+  const currentTime = date.toLocaleString().split(",")[1];
+  taskbarTimee.innerHTML = currentTime;
+}, 1000);
+
+const date = new Date();
+const options = { weekday: "short", month: "short", day: "numeric" };
+const formattedDate = date.toLocaleDateString("en-US", options);
+
+const taskbarDate = document.querySelector(".taksbar-date");
+taskbarDate.innerHTML = formattedDate;
