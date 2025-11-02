@@ -15,6 +15,7 @@ html {
 
 :root {
   --primaryBgColor: #000000;
+  --primaryPolymorph: rgba(0, 0, 0, 0.443);
   --primarySecBgColor: #0d0d0d;
   --primaryBorder: #282828;
   --text-color: #e0e0e0;
@@ -812,6 +813,25 @@ body {
   padding: 4px;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+.system-tray-expanded {
+  position: absolute;
+  /* bottom: 100%; */
+  bottom: -49vw;
+  width: 23vw;
+  right: -50%;
+  height: 14vh;
+  background-color: var(--primaryPolymorph);
+  backdrop-filter: blur(20px);
+  z-index: 300;
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 23px;
+  display: flex;
+  padding: 1vw;
+  flex-direction: column;
+  color: var(--text-color);
+  transition: all 0.3 ease-in-out;
 }
 
 .tray-icon {
@@ -1343,7 +1363,14 @@ body {
   transform: none !important;
   border-radius: 0;
 }
-
+#terminal.maximized {
+  width: 100vw !important;
+  height: calc(100vh - 48px) !important;
+  top: 0 !important;
+  left: 0 !important;
+  transform: none !important;
+  border-radius: 0;
+}
 .folder-structure-window:focus-within {
   border-color: var(--accent-color);
   box-shadow: 0 8px 32px rgba(0, 120, 212, 0.2);
@@ -1486,4 +1513,77 @@ body {
 .wallpaper-thumb:hover {
   border-color: var(--accent-color);
   transform: scale(1.04);
+}
+#terminal {
+  width: 700px;
+  height: 400px;
+  background-color: var(--primaryPolymorph);
+  backdrop-filter: blur(10px);
+  border: 1px solid #333;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: fixed;
+  top: 30px;
+  left: 240px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  background: #1d1d1d9c;
+
+  padding: 8px 12px;
+  border-bottom: 1px solid #444;
+  color: #bbb;
+  user-select: none;
+  justify-content: space-between;
+}
+
+.window-buttons i {
+  padding: 0.5rem;
+  border-radius: 12px;
+  margin-right: 14px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.window-buttons i:hover {
+  background-color: var(--primaryBorder);
+}
+
+.terminal-title {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+#output {
+  flex: 1;
+  padding: 12px;
+  color: #eee;
+  overflow-y: auto;
+  font-size: 15px;
+}
+
+#input-line {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #333;
+  color: #00ff7b;
+}
+
+#input-line span {
+  margin-right: 8px;
+}
+
+#terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  flex: 1;
+  color: #00ff7b;
+  font-size: 15px;
 }
